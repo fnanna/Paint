@@ -1,0 +1,16 @@
+*.o
+*.d
+*.depend
+
+*.exe
+*.out
+
+obj/
+bin/
+
+*.layout
+*.cbTemp
+
+!*.c
+!*.h
+!*.cbp
