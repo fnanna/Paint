@@ -1,6 +1,5 @@
 #ifndef LISTAENCADEADA_H
 #define LISTAENCADEADA_H
-
 #include "objetos.h"
 
 typedef struct No {
@@ -8,10 +7,12 @@ typedef struct No {
     struct No* proximo;
 } No;
 
+extern No* lista;
+
 No*  criarNo(Objeto obj);
-void inserir(No** lista, Objeto obj);
-void remover(No** lista, Objeto obj);
-void buscar(No* lista,Objeto obj);
-void limpar(No** lista);
+void inserir(Objeto obj);
+void remover(Objeto obj);
+void buscar(Objeto obj);
+void limpar();
 
 #endif

@@ -34,10 +34,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../main.c">
+		<Unit filename="listaEncadeada.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="listaEncadeada.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="objetos.h" />
 		<Extensions />
 	</Project>
