@@ -7,7 +7,7 @@ typedef struct No {
     struct No* proximo;
 } No;
 
-extern No* lista;
+No* lista;
 
 No*  criarNo(Objeto obj);
 void inserir(Objeto obj);
