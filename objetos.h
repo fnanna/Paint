@@ -33,7 +33,7 @@ typedef struct{
 
 Objeto criaPonto(float x, float y);
 Objeto criaLinha(float x1, float y1, float x2, float y2);
-Objeto criaPoligono();
+Objeto criaPoligono(Ponto* pontos, int quant);
 
 
 #endif

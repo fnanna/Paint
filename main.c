@@ -7,6 +7,8 @@
 //------ variaveis globais e estados
 int larguraTela;
 int alturaTela;
+Ponto pontosPoligono[100]; // vetor de pontos que foram clicados
+int totalPontosPoligono = 0;
 
 typedef enum{
     CRIAR_PONTO,
@@ -23,6 +25,7 @@ float mouse_y;
 
 // ------ funcoes do mouse e teclado (posteriormente podem ser outro arquivo)
 void mouseClick(int botao, int state, int x, int y) {
+    if (botao == GLUT_RIGHT_BUTTON) return; // ignora clique direito
     if (botao == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
        mouse_x = (float)x;
        mouse_y = (float)alturaTela - y;
@@ -47,7 +50,13 @@ void mouseClick(int botao, int state, int x, int y) {
                estadoAtual= CRIAR_LINHA_P1;
                break;
            }
-
+           case CRIAR_POLIGONO: {
+               pontosPoligono[totalPontosPoligono].x = mouse_x;
+               pontosPoligono[totalPontosPoligono].y = mouse_y;
+               totalPontosPoligono++;
+               glutPostRedisplay();
+               break;
+            }
        }
     }
 }
@@ -56,6 +65,11 @@ void mouseClick(int botao, int state, int x, int y) {
 void teclado(unsigned char key, int x, int y) {
     if (key == 27) { //aperta esc pra sair
         exit(0);
+    } else if (key == 'p' && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
+        Objeto poligono = criaPoligono(pontosPoligono, totalPontosPoligono);
+        inserir(poligono);
+        totalPontosPoligono = 0;
+        glutPostRedisplay();
     }
 }
 
@@ -75,6 +89,15 @@ void desenhaObjeto(Objeto* objeto){
             glBegin(GL_LINES);
                 glVertex2f(objeto->linha.ponto_a.x, objeto->linha.ponto_a.y);
                 glVertex2f(objeto->linha.ponto_b.x, objeto->linha.ponto_b.y);
+            glEnd();
+        break;
+        case POLIGONO:
+            glColor3f(0, 0, 0);
+            glLineWidth(2);
+            glBegin(GL_POLYGON);
+            for (int i = 0; i < objeto->poligono.total; i++) {
+            glVertex2f(objeto->poligono.pontos[i].x, objeto->poligono.pontos[i].y);
+        }
             glEnd();
         break;
     }
@@ -106,7 +129,7 @@ void criaMenu(void) {
     int menu = glutCreateMenu(menuPaint);
     glutAddMenuEntry("Desenhar Ponto",CRIAR_PONTO);
     glutAddMenuEntry("Desenhar Linha",CRIAR_LINHA_P1);
-    glutAddMenuEntry("Desenhar Poligono",CRIAR_POLIGONO);
+    glutAddMenuEntry("Desenhar Poligono", CRIAR_POLIGONO);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 

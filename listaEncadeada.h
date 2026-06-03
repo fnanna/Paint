@@ -7,8 +7,6 @@ typedef struct No {
     struct No* proximo;
 } No;
 
-No* lista;
-
 No*  criarNo(Objeto obj);
 void inserir(Objeto obj);
 void remover(Objeto obj);
