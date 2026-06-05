@@ -8,9 +8,9 @@ typedef struct No {
 } No;
 
 No*  criarNo(Objeto obj);
-void inserir(Objeto obj);
-void remover(Objeto obj);
-void buscar(Objeto obj);
-void limpar();
+void inserirLista(Objeto obj);
+void removerLista(Objeto obj);
+void buscarLista(Objeto obj);
+void limparLista();
 
 #endif

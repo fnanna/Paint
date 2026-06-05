@@ -11,13 +11,13 @@ No* criarNo(Objeto obj) {
     return novo;
 }
 
-void inserir(Objeto obj) {
+void inserirLista(Objeto obj) {
     No* novo = criarNo(obj);
     novo->proximo = lista;
     lista = novo;
 }
 
-void remover(Objeto obj) {
+void removerLista(Objeto obj) {
     No* atual = lista;
     No* anterior = NULL;
     while (atual != NULL) {
@@ -51,7 +51,7 @@ void remover(Objeto obj) {
     }
 }
 
-void buscar(Objeto obj) {
+void buscarLista(Objeto obj) {
     No* atual = lista;
     int indice = 0;
     while (atual != NULL) {
@@ -62,7 +62,7 @@ void buscar(Objeto obj) {
     }
 }
 
-void limpar() {
+void limparLista() {
     No* atual = lista;
     while (atual != NULL) {
         No* prox = atual->proximo;

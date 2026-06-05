@@ -3,6 +3,7 @@
 
 #include "objetos.h"
 #include "listaEncadeada.h"
+#include "selecao.h"
 
 //------ variaveis globais e estados
 int larguraTela;
@@ -15,9 +16,11 @@ typedef enum{
     CRIAR_LINHA_P1,
     CRIAR_LINHA_P2,
     CRIAR_POLIGONO,
+    SELECAO,
 }Estado;
 Estado estadoAtual;
 Ponto inicioLinha;
+Objeto* objetoSelecionado;
 
 extern No* lista;
 float mouse_x;
@@ -33,7 +36,7 @@ void mouseClick(int botao, int state, int x, int y) {
        switch(estadoAtual){
            case CRIAR_PONTO:{
                Objeto ponto = criaPonto(mouse_x,mouse_y);
-               inserir(ponto); //insere na lista
+               inserirLista(ponto);
                glutPostRedisplay();
                break;
            }
@@ -45,7 +48,7 @@ void mouseClick(int botao, int state, int x, int y) {
            }
            case CRIAR_LINHA_P2:{
                Objeto linha = criaLinha(inicioLinha.x,inicioLinha.y,mouse_x,mouse_y);
-               inserir(linha);
+               inserirLista(linha);
                glutPostRedisplay();
                estadoAtual= CRIAR_LINHA_P1;
                break;
@@ -57,6 +60,9 @@ void mouseClick(int botao, int state, int x, int y) {
                glutPostRedisplay();
                break;
             }
+            case SELECAO:{
+                objetoSelecionado = selecionaObjetos(mouse_x,mouse_y);
+            }
        }
     }
 }
@@ -67,7 +73,7 @@ void teclado(unsigned char key, int x, int y) {
         exit(0);
     } else if (key == 'p' && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
         Objeto poligono = criaPoligono(pontosPoligono, totalPontosPoligono);
-        inserir(poligono);
+        inserirLista(poligono);
         totalPontosPoligono = 0;
         glutPostRedisplay();
     }
@@ -75,16 +81,18 @@ void teclado(unsigned char key, int x, int y) {
 
 //------ funcoes de desenhar chamadas pelo display (posteriormente podem ser outro arquivo)
 void desenhaObjeto(Objeto* objeto){
+    if (objetoSelecionado!=NULL && estadoAtual == SELECAO && objetoSelecionado == objeto){
+            glColor3f(1,0,0);
+    }else{glColor3f(0,0,0);}
+
     switch (objeto->tipo){
         case PONTO:
-            glColor3f(0,0,0); //isso aqui pode virar um campo da struct Objeto dps
             glPointSize(3);
             glBegin(GL_POINTS);
                 glVertex2f(objeto->ponto.x, objeto->ponto.y);
             glEnd();
         break;
         case LINHA:
-            glColor3f(0,0,0);
             glLineWidth(2);
             glBegin(GL_LINES);
                 glVertex2f(objeto->linha.ponto_a.x, objeto->linha.ponto_a.y);
@@ -92,7 +100,6 @@ void desenhaObjeto(Objeto* objeto){
             glEnd();
         break;
         case POLIGONO:
-            glColor3f(0, 0, 0);
             glLineWidth(2);
             glBegin(GL_POLYGON);
             for (int i = 0; i < objeto->poligono.total; i++) {
@@ -130,6 +137,7 @@ void criaMenu(void) {
     glutAddMenuEntry("Desenhar Ponto",CRIAR_PONTO);
     glutAddMenuEntry("Desenhar Linha",CRIAR_LINHA_P1);
     glutAddMenuEntry("Desenhar Poligono", CRIAR_POLIGONO);
+    glutAddMenuEntry("Modo Seleção", SELECAO);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
