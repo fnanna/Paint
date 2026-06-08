@@ -62,6 +62,7 @@ void mouseClick(int botao, int state, int x, int y) {
             }
             case SELECAO:{
                 objetoSelecionado = selecionaObjetos(mouse_x,mouse_y);
+                glutPostRedisplay();
             }
        }
     }
@@ -76,6 +77,12 @@ void teclado(unsigned char key, int x, int y) {
         inserirLista(poligono);
         totalPontosPoligono = 0;
         glutPostRedisplay();
+    } else if (key == 127 || key == 8) {
+        if (objetoSelecionado != NULL && estadoAtual == SELECAO) {
+            removerPorPonteiro(objetoSelecionado);
+            objetoSelecionado = NULL;
+            glutPostRedisplay();
+        }
     }
 }
 
@@ -137,7 +144,7 @@ void criaMenu(void) {
     glutAddMenuEntry("Desenhar Ponto",CRIAR_PONTO);
     glutAddMenuEntry("Desenhar Linha",CRIAR_LINHA_P1);
     glutAddMenuEntry("Desenhar Poligono", CRIAR_POLIGONO);
-    glutAddMenuEntry("Modo Seleção", SELECAO);
+    glutAddMenuEntry("Modo SeleÃ§Ã£o", SELECAO);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
