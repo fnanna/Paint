@@ -17,6 +17,27 @@ void inserirLista(Objeto obj) {
     lista = novo;
 }
 
+void removerPorPonteiro(Objeto* ptr) {
+    No* atual = lista;
+    No* anterior = NULL;
+ 
+    while (atual != NULL) {
+        if (&atual->objeto == ptr) {
+            if (anterior == NULL)
+                lista = atual->proximo;
+            else
+                anterior->proximo = atual->proximo;
+            if (atual->objeto.tipo == POLIGONO && atual->objeto.poligono.pontos)
+                free(atual->objeto.poligono.pontos);
+ 
+            free(atual);
+            return;
+        }
+        anterior = atual;
+        atual = atual->proximo;
+    }
+}
+
 void removerLista(Objeto obj) {
     No* atual = lista;
     No* anterior = NULL;
