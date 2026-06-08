@@ -10,6 +10,7 @@ typedef struct No {
 No*  criarNo(Objeto obj);
 void inserirLista(Objeto obj);
 void removerLista(Objeto obj);
+void removerPorPonteiro(Objeto* ptr);
 void buscarLista(Objeto obj);
 void limparLista();
 
