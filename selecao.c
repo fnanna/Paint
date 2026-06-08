@@ -81,6 +81,44 @@ int selecionaLinha(Linha linha,float mx, float my){
     }
 }
 
+int selecionaPoligono(Poligono poligono, float mx, float my) {
+    int interseccoes = 0;
+    int n = poligono.total;
+ 
+    for (int i = 0; i < n; i++) {
+        Ponto p1 = poligono.pontos[i];
+        Ponto p2 = poligono.pontos[(i + 1) % n];
+        if (p1.y == p2.y && p1.y == my) {
+            continue;
+        }
+        if (p1.y > my && p2.y > my) {
+            continue;
+        }
+        if (p1.y < my && p2.y < my) {
+            continue;
+        }
+        if (p1.x < mx && p2.x < mx) {
+            continue;
+        }
+        if (p1.x > mx && p2.x > mx) {
+            if ((p1.y > my && p2.y <= my) || (p2.y > my && p1.y <= my)) {
+                interseccoes++;
+            }
+            continue;
+        }
+
+        float xi = p1.x + (my - p1.y) * (p2.x - p1.x) / (p2.y - p1.y);
+
+        if (xi > mx) {
+            if ((p1.y > my && p2.y <= my) || (p2.y > my && p1.y <= my)) {
+                interseccoes++;
+            }
+        }
+    }
+
+    return (interseccoes % 2 == 1);
+}
+
 
 Objeto* selecionaObjetos(float mx, float my){
     No* atual = lista;
