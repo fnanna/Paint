@@ -84,7 +84,7 @@ int selecionaLinha(Linha linha,float mx, float my){
 int selecionaPoligono(Poligono poligono, float mx, float my) {
     int interseccoes = 0;
     int n = poligono.total;
- 
+
     for (int i = 0; i < n; i++) {
         Ponto p1 = poligono.pontos[i];
         Ponto p2 = poligono.pontos[(i + 1) % n];
@@ -129,6 +129,10 @@ Objeto* selecionaObjetos(float mx, float my){
             }
         }else if(atual->objeto.tipo==LINHA){
             if(selecionaLinha(atual->objeto.linha,mx,my)){
+                return &atual->objeto;
+            }
+        }else{
+            if(selecionaPoligono(atual->objeto.poligono,mx,my)){
                 return &atual->objeto;
             }
         }

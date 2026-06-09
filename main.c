@@ -144,7 +144,7 @@ void criaMenu(void) {
     glutAddMenuEntry("Desenhar Ponto",CRIAR_PONTO);
     glutAddMenuEntry("Desenhar Linha",CRIAR_LINHA_P1);
     glutAddMenuEntry("Desenhar Poligono", CRIAR_POLIGONO);
-    glutAddMenuEntry("Modo Seleção", SELECAO);
+    glutAddMenuEntry("Modo Selecao", SELECAO);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
