@@ -4,6 +4,7 @@
 #include "objetos.h"
 #include "listaEncadeada.h"
 #include "selecao.h"
+#include "transformacoes.h"
 
 //------ variaveis globais e estados
 int larguraTela;
@@ -70,20 +71,39 @@ void mouseClick(int botao, int state, int x, int y) {
 
 
 void teclado(unsigned char key, int x, int y) {
-    if (key == 27) { //aperta esc pra sair
+    if (key == 27) {
         exit(0);
     } else if (key == 'p' && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
         Objeto poligono = criaPoligono(pontosPoligono, totalPontosPoligono);
         inserirLista(poligono);
         totalPontosPoligono = 0;
         glutPostRedisplay();
-    } else if (key == 127 || key == 8) {
-        if (objetoSelecionado != NULL && estadoAtual == SELECAO) {
-            removerPorPonteiro(objetoSelecionado);
-            objetoSelecionado = NULL;
-            glutPostRedisplay();
-        }
+    } else if ((key == 127 || key == 8) && objetoSelecionado != NULL && estadoAtual == SELECAO) {
+        removerPorPonteiro(objetoSelecionado);
+        objetoSelecionado = NULL;
+        glutPostRedisplay();
     }
+
+    if (estadoAtual != SELECAO || !objetoSelecionado) return;
+    switch (key) {
+        case 'w': case 'W': transladar(objetoSelecionado,   0,  10); break;
+        case 's': case 'S': transladar(objetoSelecionado,   0, -10); break;
+        case 'a': case 'A': transladar(objetoSelecionado, -10,   0); break;
+        case 'd': case 'D': transladar(objetoSelecionado,  10,   0); break;
+        case 'q': case 'Q': rotacionar(objetoSelecionado,  15); break;
+        case 'e': case 'E': rotacionar(objetoSelecionado, -15); break;
+        case '+': case '=': escalar(objetoSelecionado, 1.1, 1.1); break;
+        case '-': case '_': escalar(objetoSelecionado, 0.9, 0.9); break;
+        case 'z': case 'Z': escalar(objetoSelecionado, 1.1, 1); break;
+        case 'x': case 'X': escalar(objetoSelecionado, 1, 1.1); break;
+        case 'h': case 'H': refletirX(objetoSelecionado); break;
+        case 'v': case 'V': refletirY(objetoSelecionado); break;
+        case 'c': case 'C': cisalharH(objetoSelecionado,  0.1); break;
+        case 'b': case 'B': cisalharH(objetoSelecionado, -0.1); break;
+        case 'n': case 'N': cisalharV(objetoSelecionado,  0.1); break;
+        case 'm': case 'M': cisalharV(objetoSelecionado, -0.1); break;
+    }
+    glutPostRedisplay();
 }
 
 //------ funcoes de desenhar chamadas pelo display (posteriormente podem ser outro arquivo)

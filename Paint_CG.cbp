@@ -49,6 +49,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="selecao.h" />
+		<Unit filename="transformacoes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="transformacoes.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
