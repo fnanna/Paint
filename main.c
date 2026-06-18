@@ -5,6 +5,7 @@
 #include "listaEncadeada.h"
 #include "selecao.h"
 #include "transformacoes.h"
+#include "salvar.h"
 
 //------ variaveis globais e estados
 int larguraTela;
@@ -73,7 +74,7 @@ void mouseClick(int botao, int state, int x, int y) {
 void teclado(unsigned char key, int x, int y) {
     if (key == 27) {
         exit(0);
-    } else if (key == 'p' && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
+    } else if ((key == 'p' || key == 16) && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
         Objeto poligono = criaPoligono(pontosPoligono, totalPontosPoligono);
         inserirLista(poligono);
         totalPontosPoligono = 0;
@@ -82,8 +83,9 @@ void teclado(unsigned char key, int x, int y) {
         removerPorPonteiro(objetoSelecionado);
         objetoSelecionado = NULL;
         glutPostRedisplay();
+    }  else if (key == 19) {  // ctrl s
+        salvarArquivo("desenho.bin");
     }
-
     if (estadoAtual != SELECAO || !objetoSelecionado) return;
     switch (key) {
         case 'w': case 'W': transladar(objetoSelecionado,   0,  10); break;
@@ -155,7 +157,11 @@ void display(void) {
 }
 
 void menuPaint(int opcao) {
-    estadoAtual = (Estado) opcao; // muda o estado de acordo com a entry do menu
+    if (opcao == 99) {
+        salvarArquivo("desenho.bin");
+        return;
+    }
+    estadoAtual = (Estado) opcao;
     glutPostRedisplay();
 }
 
@@ -165,6 +171,7 @@ void criaMenu(void) {
     glutAddMenuEntry("Desenhar Linha",CRIAR_LINHA_P1);
     glutAddMenuEntry("Desenhar Poligono", CRIAR_POLIGONO);
     glutAddMenuEntry("Modo Selecao", SELECAO);
+    glutAddMenuEntry("Salvar", 99);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
