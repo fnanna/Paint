@@ -5,7 +5,11 @@
 #include "listaEncadeada.h"
 #include "selecao.h"
 #include "transformacoes.h"
+<<<<<<< HEAD
 #include "salvar.h"
+=======
+#include "animacao.h"
+>>>>>>> 2e877f6dee7537529abcc57239398e1dac18074a
 
 //------ variaveis globais e estados
 int larguraTela;
@@ -25,6 +29,9 @@ Ponto inicioLinha;
 Objeto* objetoSelecionado;
 
 extern No* lista;
+extern EstadoCachorro estadoCachorro;
+extern float cachorroX, cachorroY;
+
 float mouse_x;
 float mouse_y;
 
@@ -65,6 +72,7 @@ void mouseClick(int botao, int state, int x, int y) {
             case SELECAO:{
                 objetoSelecionado = selecionaObjetos(mouse_x,mouse_y);
                 glutPostRedisplay();
+                break;
             }
        }
     }
@@ -74,17 +82,27 @@ void mouseClick(int botao, int state, int x, int y) {
 void teclado(unsigned char key, int x, int y) {
     if (key == 27) {
         exit(0);
+<<<<<<< HEAD
     } else if ((key == 'p' || key == 16) && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
+=======
+    }else if (key == 13 && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
+>>>>>>> 2e877f6dee7537529abcc57239398e1dac18074a
         Objeto poligono = criaPoligono(pontosPoligono, totalPontosPoligono);
         inserirLista(poligono);
         totalPontosPoligono = 0;
         glutPostRedisplay();
-    } else if ((key == 127 || key == 8) && objetoSelecionado != NULL && estadoAtual == SELECAO) {
+    } else if (key == 127 && objetoSelecionado != NULL && estadoAtual == SELECAO) {
         removerPorPonteiro(objetoSelecionado);
         objetoSelecionado = NULL;
         glutPostRedisplay();
+<<<<<<< HEAD
     }  else if (key == 19) {  // ctrl s
         salvarArquivo("desenho.bin");
+=======
+    } else if (key == 'j' && objetoSelecionado != NULL && estadoAtual == SELECAO) {
+        iniciarAnimacaoCachorro(objetoSelecionado);
+        objetoSelecionado = NULL;
+>>>>>>> 2e877f6dee7537529abcc57239398e1dac18074a
     }
     if (estadoAtual != SELECAO || !objetoSelecionado) return;
     switch (key) {
@@ -152,6 +170,9 @@ void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     desenhaLista();
+    if (estadoCachorro == CACHORRO_ANDANDO) {
+        desenhaCachorro(cachorroX, cachorroY);
+    }
 
     glFlush();
 }
@@ -184,6 +205,10 @@ void init(void) {
 
     glLoadIdentity();
     gluOrtho2D(0, larguraTela, 0, alturaTela);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    carregarFramesCachorro();
 }
 
 int main(int argc, char** argv) {
