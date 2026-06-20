@@ -67,7 +67,7 @@ void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     desenhaLista();
-    if (estadoCachorro == CACHORRO_ANDANDO) {
+    if (estadoCachorro != CACHORRO_INATIVO) {
         desenhaCachorro(cachorroX, cachorroY);
     }
     desenhaGui();
@@ -92,6 +92,14 @@ void init(void) {
     carregarGui();
 }
 
+void reshape(int w, int h) {
+    if (w != 1000 || h != 600) {
+        glutReshapeWindow(1000, 600); // forca de volta ao tamanho original
+        return;
+    }
+    glViewport(0, 0, w, h);
+}
+
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
@@ -100,9 +108,17 @@ int main(int argc, char** argv) {
 
     glutCreateWindow("paint");
 
+    // PROIBIR DE MINIMIZAR JANELA
+    HWND hwnd = FindWindow(NULL, "paint");
+    LONG estilo = GetWindowLong(hwnd, GWL_STYLE);
+    estilo &= ~WS_MAXIMIZEBOX; // remove o botao de maximizar
+    SetWindowLong(hwnd, GWL_STYLE, estilo);
+    SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+
     glutDisplayFunc(display);
     glutKeyboardFunc(teclado);
     glutMouseFunc(mouseClick);
+    glutReshapeFunc(reshape);
 
     init();
     glutMainLoop();

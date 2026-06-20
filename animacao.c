@@ -14,6 +14,9 @@ float cachorroX, cachorroY;
 extern Objeto* objetoSelecionado;
 
 GLuint frames[8];
+GLuint frameBocaAberta;
+GLuint frameGordo;
+
 int frameAtual = 0;
 
 void carregarFramesCachorro() {
@@ -23,14 +26,26 @@ void carregarFramesCachorro() {
         sprintf(nome, "assets/frame%d.png", i);
         frames[i] = carregarTextura(nome, &w, &h);
     }
+    frameBocaAberta = carregarTextura("assets/boca_aberta.png", &w, &h);
+    frameGordo = carregarTextura("assets/gordo.png", &w, &h);
 }
 
 void desenhaCachorro(float x, float y) {
+    GLuint texturaAtual;
+
+    if (estadoCachorro == CACHORRO_COMENDO) {
+        texturaAtual = frameBocaAberta;
+    } else if (estadoCachorro == CACHORRO_GORDO) {
+        texturaAtual = frameGordo;
+    } else {
+        texturaAtual = frames[frameAtual];
+    }
+
     float w = SPRITE_W;
     float h = SPRITE_H;
 
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, frames[frameAtual]);
+    glBindTexture(GL_TEXTURE_2D, texturaAtual);
     glColor3f(1, 1, 1);
 
     glBegin(GL_QUADS);
@@ -51,13 +66,23 @@ void timerCachorro(int valor) {
         float larguraSprite = SPRITE_W;
 
         if (objetoSelecionado != NULL && cachorroX + larguraSprite >= calcularCentro(objetoSelecionado).x) {
-            removerPorPonteiro(objetoSelecionado);
-            objetoSelecionado = NULL;
-            estadoCachorro = CACHORRO_INATIVO;
+            estadoCachorro = CACHORRO_COMENDO;
+            glutTimerFunc(250, timerCachorro, 0); // boca aberta visivel por 250ms
         } else {
             glutTimerFunc(60, timerCachorro, 0);
         }
 
+        glutPostRedisplay();
+    }
+    else if (estadoCachorro == CACHORRO_COMENDO) {
+        removerPorPonteiro(objetoSelecionado);
+        objetoSelecionado = NULL;
+        estadoCachorro = CACHORRO_GORDO;
+        glutPostRedisplay();
+        glutTimerFunc(800, timerCachorro, 0); // fica gordo
+    }
+    else if (estadoCachorro == CACHORRO_GORDO) {
+        estadoCachorro = CACHORRO_INATIVO; //cachorro some
         glutPostRedisplay();
     }
 }

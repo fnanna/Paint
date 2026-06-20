@@ -2,6 +2,8 @@
 #include "texturas.h"
 #include "interface.h"
 #include "entrada.h"
+#include "salvar.h"
+#include "carregar.h"
 
 #define NUM_BOTOES 5
 #define NUM_CORES 11
@@ -82,6 +84,17 @@ void desenhaGui(void) {
 }
 
 int verificarCliqueGui(float mx, float my){
+    if(mx >= 18 && mx <= 71 &&
+       my >= 578 && my <= 595){
+        salvarArquivo("desenho.bin");
+        return 1;
+    }
+    if(mx >= 82 && mx <= 161 &&
+       my >= 578 && my <= 595){
+        carregarArquivo("desenho.bin");
+        return 1;
+    }
+
     for (int i = 0; i < NUM_BOTOES; i++) {
         if (mx >= botoes[i].x1 && mx <= botoes[i].x2 &&
             my >= botoes[i].y1 && my <= botoes[i].y2) {

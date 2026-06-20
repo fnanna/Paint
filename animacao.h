@@ -9,7 +9,8 @@
 typedef enum {
     CACHORRO_INATIVO,
     CACHORRO_ANDANDO,
-    CACHORRO_COMEU
+    CACHORRO_COMENDO,
+    CACHORRO_GORDO
 } EstadoCachorro;
 
 
