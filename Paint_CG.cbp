@@ -38,6 +38,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="animacao.h" />
+		<Unit filename="assets/boca_aberta.png" />
 		<Unit filename="assets/frame0.png" />
 		<Unit filename="assets/frame1.png" />
 		<Unit filename="assets/frame2.png" />
@@ -46,6 +47,7 @@
 		<Unit filename="assets/frame5.png" />
 		<Unit filename="assets/frame6.png" />
 		<Unit filename="assets/frame7.png" />
+		<Unit filename="assets/gordo.png" />
 		<Unit filename="assets/gui.png" />
 		<Unit filename="carregar.c">
 			<Option compilerVar="CC" />

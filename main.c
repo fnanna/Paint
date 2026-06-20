@@ -137,7 +137,7 @@ int main(int argc, char** argv) {
     glutCreateWindow("paint");
 
     // PROIBIR DE MINIMIZAR JANELA
-    HWND hwnd = FindWindow(NULL, "paint");
+    HWND hwnd = FindWindow(NULL, "Paint");
     LONG estilo = GetWindowLong(hwnd, GWL_STYLE);
     estilo &= ~WS_MAXIMIZEBOX; // remove o botao de maximizar
     SetWindowLong(hwnd, GWL_STYLE, estilo);
