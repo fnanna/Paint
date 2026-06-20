@@ -34,10 +34,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-<<<<<<< HEAD
-=======
-		<Unit filename=".gitignore" />
->>>>>>> d038907ced6e871850ba00490108cee61c5e018b
 		<Unit filename="animacao.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -50,6 +46,19 @@
 		<Unit filename="assets/frame5.png" />
 		<Unit filename="assets/frame6.png" />
 		<Unit filename="assets/frame7.png" />
+		<Unit filename="assets/gui.png" />
+		<Unit filename="carregar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="carregar.h" />
+		<Unit filename="entrada.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="entrada.h" />
+		<Unit filename="interface.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="interface.h" />
 		<Unit filename="listaEncadeada.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -69,10 +78,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="selecao.h" />
-<<<<<<< HEAD
-=======
-		<Unit filename="stb_image.h" />
->>>>>>> d038907ced6e871850ba00490108cee61c5e018b
 		<Unit filename="texturas.c">
 			<Option compilerVar="CC" />
 		</Unit>

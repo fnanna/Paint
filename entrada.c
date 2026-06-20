@@ -103,6 +103,8 @@ void teclado(unsigned char key, int x, int y) {
     // ---- salvar ----
     else if (key == 19) { // ctrl+s
         salvarArquivo("desenho.bin");
+    }else if(key==15){ // ctrl+o
+        carregarArquivo("desenho.bin");
     }
     // ---- animacao cachorro ----
     else if (key == 'j' && objetoSelecionado != NULL && estadoAtual == SELECAO) {
