@@ -78,6 +78,14 @@ void mouseClick(int botao, int state, int x, int y) {
 void teclado(unsigned char key, int x, int y) {
     if (key == 27) {
         exit(0);
+    }else if (key == 'p'){
+        estadoAtual=CRIAR_PONTO;
+    }else if (key == 'l'){
+        estadoAtual=CRIAR_LINHA_P1;
+    }else if (key == 'f'){
+        estadoAtual=CRIAR_POLIGONO;
+    }else if (key == 's'){
+        estadoAtual=SELECAO;
     }else if (key == 13 && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
         Objeto poligono = criaPoligono(pontosPoligono, totalPontosPoligono);
         inserirLista(poligono);
@@ -161,21 +169,7 @@ void display(void) {
         desenhaCachorro(cachorroX, cachorroY);
     }
 
-    glFlush();
-}
-
-void menuPaint(int opcao) {
-    estadoAtual = (Estado) opcao; // muda o estado de acordo com a entry do menu
-    glutPostRedisplay();
-}
-
-void criaMenu(void) {
-    int menu = glutCreateMenu(menuPaint);
-    glutAddMenuEntry("Desenhar Ponto",CRIAR_PONTO);
-    glutAddMenuEntry("Desenhar Linha",CRIAR_LINHA_P1);
-    glutAddMenuEntry("Desenhar Poligono", CRIAR_POLIGONO);
-    glutAddMenuEntry("Modo Selecao", SELECAO);
-    glutAttachMenu(GLUT_RIGHT_BUTTON);
+    glutSwapBuffers();
 }
 
 void init(void) {
@@ -195,7 +189,7 @@ void init(void) {
 
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(1366, 768);
     glutInitWindowPosition(0, 0);
 
@@ -207,7 +201,6 @@ int main(int argc, char** argv) {
     glutMouseFunc(mouseClick);
 
     init();
-    criaMenu();
     glutMainLoop();
     return 0;
 }

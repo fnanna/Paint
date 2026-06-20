@@ -34,6 +34,18 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="animacao.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="animacao.h" />
+		<Unit filename="assets/frame0.png" />
+		<Unit filename="assets/frame1.png" />
+		<Unit filename="assets/frame2.png" />
+		<Unit filename="assets/frame3.png" />
+		<Unit filename="assets/frame4.png" />
+		<Unit filename="assets/frame5.png" />
+		<Unit filename="assets/frame6.png" />
+		<Unit filename="assets/frame7.png" />
 		<Unit filename="listaEncadeada.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -49,6 +61,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="selecao.h" />
+		<Unit filename="texturas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="texturas.h" />
 		<Unit filename="transformacoes.c">
 			<Option compilerVar="CC" />
 		</Unit>
