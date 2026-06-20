@@ -8,6 +8,11 @@ typedef struct {
     Estado estado;
 } BotaoGui;
 
+typedef struct {
+    float x1, y1, x2, y2;
+    float r, g, b;
+} BotaoCor;
+
 void carregarGui(void);
 void desenhaGui(void);
 int verificarCliqueGui(float mx, float my);

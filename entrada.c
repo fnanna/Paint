@@ -10,6 +10,7 @@
 
 Estado estadoAtual;
 Objeto* objetoSelecionado;
+float corAtual[3]={0.16, 0.16, 0.16};
 
 Ponto inicioLinha;
 Ponto pontosPoligono[100]; // vetor de pontos que foram clicados
@@ -34,6 +35,7 @@ void mouseClick(int botao, int state, int x, int y) {
        switch(estadoAtual){
            case CRIAR_PONTO:{
                Objeto ponto = criaPonto(mouse_x,mouse_y);
+               adicionarCor(&ponto,corAtual[0],corAtual[1],corAtual[2]);
                inserirLista(ponto);
                glutPostRedisplay();
                break;
@@ -46,6 +48,7 @@ void mouseClick(int botao, int state, int x, int y) {
            }
            case CRIAR_LINHA_P2:{
                Objeto linha = criaLinha(inicioLinha.x,inicioLinha.y,mouse_x,mouse_y);
+               adicionarCor(&linha,corAtual[0],corAtual[1],corAtual[2]);
                inserirLista(linha);
                glutPostRedisplay();
                estadoAtual= CRIAR_LINHA_P1;
@@ -86,6 +89,7 @@ void teclado(unsigned char key, int x, int y) {
     // ---- fechar poligono ----
     else if ((key == 'p' || key == 16 || key == 13) && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
         Objeto poligono = criaPoligono(pontosPoligono, totalPontosPoligono);
+        adicionarCor(&poligono,corAtual[0],corAtual[1],corAtual[2]);
         inserirLista(poligono);
         totalPontosPoligono = 0;
         glutPostRedisplay();

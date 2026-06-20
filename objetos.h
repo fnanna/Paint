@@ -24,6 +24,7 @@ typedef enum{
 
 typedef struct{
     TipoObjeto tipo;
+    float cor[3];
     union{
         Ponto ponto;
         Linha linha;
@@ -34,6 +35,7 @@ typedef struct{
 Objeto criaPonto(float x, float y);
 Objeto criaLinha(float x1, float y1, float x2, float y2);
 Objeto criaPoligono(Ponto* pontos, int quant);
+void adicionarCor(Objeto* objeto, float r,float g,float b);
 
 
 #endif

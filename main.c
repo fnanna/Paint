@@ -10,9 +10,11 @@
 #include "entrada.h"
 #include "interface.h"
 
+
 extern int larguraTela;
 extern int alturaTela;
 extern Estado estadoAtual;
+extern float corAtual[3];
 
 extern No* lista;
 
@@ -25,7 +27,7 @@ extern Objeto* objetoSelecionado;
 void desenhaObjeto(Objeto* objeto){
     if (objetoSelecionado!=NULL && estadoAtual == SELECAO && objetoSelecionado == objeto ){
             glColor3f(1,0,0);
-    }else{glColor3f(0,0,0);}
+    }else{glColor3f(objeto->cor[0],objeto->cor[1],objeto->cor[2]);}
 
     switch (objeto->tipo){
         case PONTO:

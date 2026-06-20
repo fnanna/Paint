@@ -35,3 +35,9 @@ Objeto criaPoligono(Ponto* pontos, int quant) {
     }
     return obj;
 }
+
+void adicionarCor(Objeto* objeto, float r,float g,float b){
+    objeto->cor[0]=r;
+    objeto->cor[1]=g;
+    objeto->cor[2]=b;
+}
