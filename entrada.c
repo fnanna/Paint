@@ -6,6 +6,7 @@
 #include "salvar.h"
 #include "animacao.h"
 #include "entrada.h"
+#include "interface.h"
 
 Estado estadoAtual;
 Objeto* objetoSelecionado;
@@ -59,6 +60,13 @@ void mouseClick(int botao, int state, int x, int y) {
             }
             case SELECAO:{
                 objetoSelecionado = selecionaObjetos(mouse_x,mouse_y);
+                glutPostRedisplay();
+                break;
+            }
+            case DELETAR:{
+                objetoSelecionado = selecionaObjetos(mouse_x,mouse_y);
+                removerPorPonteiro(objetoSelecionado);
+                objetoSelecionado = NULL;
                 glutPostRedisplay();
                 break;
             }

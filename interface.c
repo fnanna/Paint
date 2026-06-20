@@ -3,19 +3,21 @@
 #include "interface.h"
 #include "entrada.h"
 
+#define NUM_BOTOES 5
+
 GLuint texturaGui;
-int guiW=1000, guiH=600;
+int guiW, guiH;
 
 extern Estado estadoAtual;
 extern int totalPontosPoligono;
 
 BotaoGui botoes[] = {
-    { 0, 0, 0, 0, CRIAR_PONTO    },
-    { 0, 0, 0, 0, CRIAR_LINHA_P1 },
-    { 0, 0, 0, 0, CRIAR_POLIGONO },
-    { 0, 0, 0, 0, SELECAO        },
+    {18, 541, 47, 570,CRIAR_PONTO},
+    {18, 512, 47, 541,CRIAR_LINHA_P1},
+    {18, 483, 47, 512,CRIAR_POLIGONO},
+    {18, 454, 47, 483,SELECAO},
+    {18, 425, 47, 454,DELETAR},
 };
-#define NUM_BOTOES (sizeof(botoes) / sizeof(BotaoGui))
 
 void carregarGui(void) {
     texturaGui = carregarTextura("assets/gui.png", &guiW, &guiH);
@@ -33,10 +35,10 @@ void desenhaGui(void) {
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
-    // destaque do botao ativo (placeholder, ajustar depois)
-    /*for (int i = 0; i < NUM_BOTOES; i++) {
-        if (botoes[i].estado == estadoAtual) {
-            glColor3f(1, 1, 0);
+    // destaque do botao ativo
+    for (int i = 0; i < NUM_BOTOES; i++) {
+        if (botoes[i].estado == estadoAtual || botoes[i].estado == CRIAR_LINHA_P1 && estadoAtual == CRIAR_LINHA_P2) {
+            glColor3f(1, 1, 1);
             glLineWidth(2);
             glBegin(GL_LINE_LOOP);
                 glVertex2f(botoes[i].x1, botoes[i].y1);
@@ -45,10 +47,10 @@ void desenhaGui(void) {
                 glVertex2f(botoes[i].x1, botoes[i].y2);
             glEnd();
         }
-    }*/
+    }
 }
 
-int verificarCliqueGui(float mx, float my) {
+int verificarCliqueGui(float mx, float my){
     for (int i = 0; i < NUM_BOTOES; i++) {
         if (mx >= botoes[i].x1 && mx <= botoes[i].x2 &&
             my >= botoes[i].y1 && my <= botoes[i].y2) {

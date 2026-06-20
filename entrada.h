@@ -7,6 +7,7 @@ typedef enum{
     CRIAR_LINHA_P2,
     CRIAR_POLIGONO,
     SELECAO,
+    DELETAR,
 }Estado;
 
 void mouseClick(int botao, int state, int x, int y);
