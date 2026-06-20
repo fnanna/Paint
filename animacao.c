@@ -1,15 +1,17 @@
 #include "texturas.h"
-
+#include <stdio.h>
+#include "listaEncadeada.h"
 #include "animacao.h"
 #include "transformacoes.h"
 #include "objetos.h"
+#include "entrada.h"
 
 #define SPRITE_W 48*3
 #define SPRITE_H 36*3
 
 EstadoCachorro estadoCachorro = CACHORRO_INATIVO;
 float cachorroX, cachorroY;
-Objeto* objetoAlvo = NULL;
+extern Objeto* objetoSelecionado;
 
 GLuint frames[8];
 int frameAtual = 0;
@@ -48,25 +50,23 @@ void timerCachorro(int valor) {
         frameAtual = (frameAtual + 1) % 8;  //loop automatico
         float larguraSprite = SPRITE_W;
 
-        if (objetoAlvo != NULL && cachorroX + larguraSprite >= calcularCentro(objetoAlvo).x) {
-            printf("Cachorro alcançou o alvo, removendo %p\n", (void*)objetoAlvo);
-            removerPorPonteiro(objetoAlvo);
-            objetoAlvo = NULL;
+        if (objetoSelecionado != NULL && cachorroX + larguraSprite >= calcularCentro(objetoSelecionado).x) {
+            removerPorPonteiro(objetoSelecionado);
+            objetoSelecionado = NULL;
             estadoCachorro = CACHORRO_INATIVO;
         } else {
-            glutTimerFunc(50, timerCachorro, 0);
+            glutTimerFunc(60, timerCachorro, 0);
         }
 
         glutPostRedisplay();
     }
 }
 
-void iniciarAnimacaoCachorro(Objeto* alvo) {
+void iniciarAnimacaoCachorro() {
 
-    objetoAlvo= alvo;
     cachorroX = 0;
-    cachorroY = calcularCentro(alvo).y - 18;       // centraliza verticalmente (sprite de 36px)
+    cachorroY = calcularCentro(objetoSelecionado).y - 18;       // centraliza verticalmente (sprite de 36px)
     frameAtual = 0;
     estadoCachorro = CACHORRO_ANDANDO;
-    glutTimerFunc(50, timerCachorro, 0);
+    glutTimerFunc(60, timerCachorro, 0);
 }

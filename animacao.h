@@ -12,9 +12,10 @@ typedef enum {
     CACHORRO_COMEU
 } EstadoCachorro;
 
+
 void carregarFramesCachorro();
 void desenhaCachorro(float x, float y); //desenha com a textura
 void timerCachorro(int valor); //funcao callback
-void iniciarAnimacaoCachorro(Objeto* alvo); //chamada pelo menu
+void iniciarAnimacaoCachorro(); //chamada pelo menu
 
 #endif

@@ -34,6 +34,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+<<<<<<< HEAD
+=======
+		<Unit filename=".gitignore" />
+>>>>>>> d038907ced6e871850ba00490108cee61c5e018b
 		<Unit filename="animacao.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -57,10 +61,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="objetos.h" />
+		<Unit filename="salvar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="salvar.h" />
 		<Unit filename="selecao.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="selecao.h" />
+<<<<<<< HEAD
+=======
+		<Unit filename="stb_image.h" />
+>>>>>>> d038907ced6e871850ba00490108cee61c5e018b
 		<Unit filename="texturas.c">
 			<Option compilerVar="CC" />
 		</Unit>
