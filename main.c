@@ -15,6 +15,11 @@ extern int larguraTela;
 extern int alturaTela;
 extern Estado estadoAtual;
 extern float corAtual[3];
+extern float mouse_x;
+extern  float mouse_y;
+extern Ponto inicioLinha;
+extern int totalPontosPoligono;
+extern Ponto pontosPoligono[50];
 
 extern No* lista;
 
@@ -62,11 +67,34 @@ void desenhaLista(){ //percorre a lista desenhando todos os objetos
     }
 }
 
+void desenhaPreview(){
+    if (estadoAtual == CRIAR_LINHA_P2) {
+        glColor3f(0.5,0.5,0.5);
+        glLineWidth(1);
+        glBegin(GL_LINES);
+            glVertex2f(inicioLinha.x, inicioLinha.y);
+            glVertex2f(mouse_x, mouse_y);
+        glEnd();
+    }
+
+    if (estadoAtual == CRIAR_POLIGONO && totalPontosPoligono > 0) {
+        glLineWidth(1);
+        glColor3f(0.5,0.5,0.5);
+        glBegin(GL_LINE_STRIP);
+            for (int i = 0; i < totalPontosPoligono; i++) {
+                glVertex2f(pontosPoligono[i].x, pontosPoligono[i].y);
+            }
+            glVertex2f(mouse_x, mouse_y);
+        glEnd();
+    }
+}
+
 //------ main do opengl
 void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     desenhaLista();
+    desenhaPreview();
     if (estadoCachorro != CACHORRO_INATIVO) {
         desenhaCachorro(cachorroX, cachorroY);
     }
@@ -118,6 +146,7 @@ int main(int argc, char** argv) {
     glutDisplayFunc(display);
     glutKeyboardFunc(teclado);
     glutMouseFunc(mouseClick);
+    glutPassiveMotionFunc(mouseMove);
     glutReshapeFunc(reshape);
 
     init();

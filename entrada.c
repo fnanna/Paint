@@ -13,7 +13,7 @@ Objeto* objetoSelecionado;
 float corAtual[3]={0.16, 0.16, 0.16};
 
 Ponto inicioLinha;
-Ponto pontosPoligono[100]; // vetor de pontos que foram clicados
+Ponto pontosPoligono[50]; // vetor de pontos que foram clicados
 int totalPontosPoligono = 0;
 
 int larguraTela;
@@ -131,4 +131,14 @@ void teclado(unsigned char key, int x, int y) {
         case 'm': case 'M': cisalharV(objetoSelecionado, -0.1); break;
     }
     glutPostRedisplay();
+}
+
+void mouseMove(int x, int y) {
+    mouse_x = (float)x;
+    mouse_y = (float)alturaTela - y;
+
+    if (estadoAtual == CRIAR_LINHA_P2 ||
+        (estadoAtual == CRIAR_POLIGONO && totalPontosPoligono > 0)) {
+        glutPostRedisplay();
+    }
 }
