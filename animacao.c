@@ -1,5 +1,6 @@
 #include "texturas.h"
-
+#include <stdio.h>
+#include "listaEncadeada.h"
 #include "animacao.h"
 #include "transformacoes.h"
 #include "objetos.h"

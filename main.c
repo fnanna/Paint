@@ -5,11 +5,8 @@
 #include "listaEncadeada.h"
 #include "selecao.h"
 #include "transformacoes.h"
-<<<<<<< HEAD
 #include "salvar.h"
-=======
 #include "animacao.h"
->>>>>>> 2e877f6dee7537529abcc57239398e1dac18074a
 
 //------ variaveis globais e estados
 int larguraTela;
@@ -35,7 +32,7 @@ extern float cachorroX, cachorroY;
 float mouse_x;
 float mouse_y;
 
-// ------ funcoes do mouse e teclado (posteriormente podem ser outro arquivo)
+// ------ funcoes do mouse e teclado
 void mouseClick(int botao, int state, int x, int y) {
     if (botao == GLUT_RIGHT_BUTTON) return; // ignora clique direito
     if (botao == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
@@ -49,7 +46,7 @@ void mouseClick(int botao, int state, int x, int y) {
                glutPostRedisplay();
                break;
            }
-           case CRIAR_LINHA_P1:{ //aguardando segundo pontp
+           case CRIAR_LINHA_P1:{ //aguardando segundo ponto
                inicioLinha.x = mouse_x;
                inicioLinha.y = mouse_y;
                estadoAtual= CRIAR_LINHA_P2;
@@ -78,32 +75,38 @@ void mouseClick(int botao, int state, int x, int y) {
     }
 }
 
-
 void teclado(unsigned char key, int x, int y) {
     if (key == 27) {
         exit(0);
-<<<<<<< HEAD
-    } else if ((key == 'p' || key == 16) && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
-=======
-    }else if (key == 13 && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
->>>>>>> 2e877f6dee7537529abcc57239398e1dac18074a
+    }
+    // ---- atalhos para trocar de modo ----
+    else if (key == '1') { estadoAtual = CRIAR_PONTO; }
+    else if (key == '2') { estadoAtual = CRIAR_LINHA_P1; }
+    else if (key == '3') { estadoAtual = CRIAR_POLIGONO; totalPontosPoligono = 0; }
+    else if (key == '4') { estadoAtual = SELECAO; }
+    // ---- fechar poligono ----
+    else if ((key == 'p' || key == 16 || key == 13) && estadoAtual == CRIAR_POLIGONO && totalPontosPoligono >= 3) {
         Objeto poligono = criaPoligono(pontosPoligono, totalPontosPoligono);
         inserirLista(poligono);
         totalPontosPoligono = 0;
         glutPostRedisplay();
-    } else if (key == 127 && objetoSelecionado != NULL && estadoAtual == SELECAO) {
+    }
+    // ---- remover objeto selecionado ----
+    else if (key == 127 && objetoSelecionado != NULL && estadoAtual == SELECAO) {
         removerPorPonteiro(objetoSelecionado);
         objetoSelecionado = NULL;
         glutPostRedisplay();
-<<<<<<< HEAD
-    }  else if (key == 19) {  // ctrl s
+    }
+    // ---- salvar ----
+    else if (key == 19) { // ctrl+s
         salvarArquivo("desenho.bin");
-=======
-    } else if (key == 'j' && objetoSelecionado != NULL && estadoAtual == SELECAO) {
+    }
+    // ---- animacao cachorro ----
+    else if (key == 'j' && objetoSelecionado != NULL && estadoAtual == SELECAO) {
         iniciarAnimacaoCachorro(objetoSelecionado);
         objetoSelecionado = NULL;
->>>>>>> 2e877f6dee7537529abcc57239398e1dac18074a
     }
+
     if (estadoAtual != SELECAO || !objetoSelecionado) return;
     switch (key) {
         case 'w': case 'W': transladar(objetoSelecionado,   0,  10); break;
@@ -126,7 +129,7 @@ void teclado(unsigned char key, int x, int y) {
     glutPostRedisplay();
 }
 
-//------ funcoes de desenhar chamadas pelo display (posteriormente podem ser outro arquivo)
+//------ funcoes de desenhar
 void desenhaObjeto(Objeto* objeto){
     if (objetoSelecionado!=NULL && estadoAtual == SELECAO && objetoSelecionado == objeto){
             glColor3f(1,0,0);
@@ -177,25 +180,6 @@ void display(void) {
     glFlush();
 }
 
-void menuPaint(int opcao) {
-    if (opcao == 99) {
-        salvarArquivo("desenho.bin");
-        return;
-    }
-    estadoAtual = (Estado) opcao;
-    glutPostRedisplay();
-}
-
-void criaMenu(void) {
-    int menu = glutCreateMenu(menuPaint);
-    glutAddMenuEntry("Desenhar Ponto",CRIAR_PONTO);
-    glutAddMenuEntry("Desenhar Linha",CRIAR_LINHA_P1);
-    glutAddMenuEntry("Desenhar Poligono", CRIAR_POLIGONO);
-    glutAddMenuEntry("Modo Selecao", SELECAO);
-    glutAddMenuEntry("Salvar", 99);
-    glutAttachMenu(GLUT_RIGHT_BUTTON);
-}
-
 void init(void) {
     larguraTela = glutGet(GLUT_SCREEN_WIDTH);
     alturaTela = glutGet(GLUT_SCREEN_HEIGHT);
@@ -225,7 +209,6 @@ int main(int argc, char** argv) {
     glutMouseFunc(mouseClick);
 
     init();
-    criaMenu();
     glutMainLoop();
     return 0;
 }
