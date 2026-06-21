@@ -24,6 +24,7 @@ void salvarArquivo(const char* caminho) {
     while (atual != NULL) {
         Objeto* obj = &atual->objeto;
         fwrite(&obj->tipo, sizeof(TipoObjeto), 1, f); // salva o tipo do objeto como bytes
+        fwrite(obj->cor, sizeof(float), 3, f);
         if (obj->tipo == PONTO) {
             fwrite(&obj->ponto, sizeof(Ponto), 1, f); // salva os dados do ponto
         } else if (obj->tipo == LINHA) {

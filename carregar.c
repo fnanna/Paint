@@ -32,6 +32,7 @@ void carregarArquivo(const char* caminho) {
 
         Objeto obj;
         obj.tipo = tipo;
+        fread(obj.cor, sizeof(float), 3, f);
 
         if (tipo == PONTO) {
             // ponto tem tamanho fixo, lê de uma vez

@@ -7,6 +7,7 @@
 #include "animacao.h"
 #include "entrada.h"
 #include "interface.h"
+#include "carregar.h"
 
 Estado estadoAtual;
 Objeto* objetoSelecionado;
