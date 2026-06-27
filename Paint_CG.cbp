@@ -72,6 +72,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="objetos.h" />
+		<Unit filename="quickhull.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="quickhull.h" />
 		<Unit filename="salvar.c">
 			<Option compilerVar="CC" />
 		</Unit>
