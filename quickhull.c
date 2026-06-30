@@ -78,3 +78,21 @@ int quickHull(Ponto *pontos, int n, Ponto *vetSaida) {
 
     return idx;
 }
+
+void converterParaConvexo(Objeto* objetoSelecionado) {
+    if (objetoSelecionado == NULL || objetoSelecionado->tipo != POLIGONO) return;
+
+    int n = objetoSelecionado->poligono.total;
+    if (n < 3) return;
+
+    Ponto* saida = (Ponto*) malloc(n * sizeof(Ponto));
+    int totalSaida = quickHull(objetoSelecionado->poligono.pontos, n, saida);
+
+    if (totalSaida >= 3) {
+        free(objetoSelecionado->poligono.pontos);
+        objetoSelecionado->poligono.pontos = saida;
+        objetoSelecionado->poligono.total = totalSaida;
+    } else {
+        free(saida);
+    }
+}

@@ -111,6 +111,10 @@ void teclado(unsigned char key, int x, int y) {
     else if (key == 'j' && objetoSelecionado != NULL && estadoAtual == SELECAO) {
         iniciarAnimacaoCachorro();
     }
+    // ----chama fecho convexo ----
+    else if (key == 'k' && estadoAtual == SELECAO) {
+        converterParaConvexo(objetoSelecionado);
+    }
 
     if (estadoAtual != SELECAO || !objetoSelecionado) return;
     switch (key) {

@@ -2,6 +2,6 @@
 #define QUICKHULL_H
 #include "objetos.h"
 
-int quickHull(Ponto *pontos, int n, Ponto *vetSaida);
+void converterParaConvexo(Objeto* objetoSelecionado);
 
 #endif
